@@ -1,1 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project Title | Project Page</title>
+  <meta name="description" content="One-line description of the project">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #2b2b2b;
+      --strong: #111111;
+      --muted: #6b6b6b;
+      --line: #dcdcdc;
+      --soft: #f5f5f3;
+      --link: #2a5db0;
+      --btn: #363636;
+      --btn-fg: #ffffff;
+      --hl: #fff6d6;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #16171a;
+        --fg: #d6d6d6;
+        --strong: #f2f2f2;
+        --muted: #8d8d8d;
+        --line: #2c2d31;
+        --soft: #1e1f23;
+        --link: #7fa9ec;
+        --btn: #ececec;
+        --btn-fg: #16171a;
+        --hl: #2b2711;
+      }
+    }
 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Times New Roman", Times, "Liberation Serif", "Nimbus Roman", serif;
+      font-size: 19px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    strong { color: var(--strong); font-weight: 700; }
+
+    .container { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+    .narrow { max-width: 780px; margin: 0 auto; }
+
+    /* ── Header: title / authors / links ── */
+    header { text-align: center; padding: 88px 0 56px; }
+
+    .venue {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 3px 16px;
+      margin-bottom: 26px;
+    }
+    h1 {
+      font-size: clamp(32px, 5.6vw, 52px);
+      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--strong);
+    }
+    h1 .sub {
+      display: block;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--muted);
+      font-size: 0.56em;
+      margin-top: 12px;
+      letter-spacing: 0;
+    }
+
+    .authors { margin-top: 32px; font-size: 22px; }
+    .authors span { display: inline-block; margin: 0 12px; }
+    .authors sup, .affil sup { font-size: 0.65em; color: var(--muted); margin-left: 1px; }
+    .affil { margin-top: 10px; color: var(--muted); font-size: 18px; line-height: 1.6; }
+    .affil span { display: inline-block; margin: 0 12px; }
+    .note { margin-top: 4px; color: var(--muted); font-size: 16px; font-style: italic; }
+
+    .buttons { margin-top: 36px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .buttons a {
+      background: var(--btn);
+      color: var(--btn-fg);
+      padding: 7px 24px;
+      border-radius: 999px;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      transition: opacity .2s, transform .2s;
+    }
+    .buttons a:hover { opacity: .8; text-decoration: none; transform: translateY(-1px); }
+
+    /* ── Sections ── */
+    section { padding: 44px 0; }
+    h2 {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--strong);
+      margin-bottom: 26px;
+    }
+    h2::after {
+      content: "";
+      display: block;
+      width: 40px;
+      height: 2px;
+      background: var(--strong);
+      margin: 12px auto 0;
+    }
+    p + p { margin-top: 1em; }
+    .justify { text-align: justify; hyphens: auto; }
+    .lead { text-align: center; color: var(--muted); max-width: 660px; margin: -6px auto 26px; font-size: 18px; font-style: italic; }
+
+    /* Highlights (typographic, no graphics) */
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 8px; }
+    .stat { background: var(--soft); border-radius: 10px; padding: 24px 12px; text-align: center; }
+    .stat b { display: block; font-size: 40px; font-weight: 700; color: var(--strong); line-height: 1.15; }
+    .stat span { font-size: 16px; color: var(--muted); }
+
+    /* Method steps */
+    .steps { list-style: none; counter-reset: s; margin-top: 8px; }
+    .steps li {
+      counter-increment: s;
+      position: relative;
+      padding: 18px 0 18px 56px;
+      border-bottom: 1px solid var(--line);
+    }
+    .steps li:first-child { border-top: 1px solid var(--line); }
+    .steps li::before {
+      content: counter(s);
+      position: absolute; left: 0; top: 18px;
+      width: 36px; height: 36px; line-height: 35px; text-align: center;
+      border-radius: 50%; background: var(--soft); color: var(--strong);
+      font-weight: 700; font-size: 18px;
+    }
+    .steps li b { color: var(--strong); display: block; font-size: 21px; }
+    .steps li span { color: var(--muted); font-size: 18px; }
+
+    /* Table */
+    .table-wrap { overflow-x: auto; margin-top: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 17px; font-variant-numeric: tabular-nums; }
+    caption { caption-side: bottom; text-align: left; color: var(--muted); font-size: 16px; padding-top: 12px; }
+    th, td { padding: 9px 14px; text-align: right; white-space: nowrap; }
+    th:first-child, td:first-child { text-align: left; }
+    thead th { color: var(--strong); font-weight: 700; border-top: 2px solid var(--strong); border-bottom: 1px solid var(--strong); }
+    tbody td { border-bottom: 1px solid var(--line); }
+    tbody tr.group td { text-align: left; font-size: 15px; font-weight: 700; font-style: italic; color: var(--muted); background: var(--soft); }
+    tbody tr.ours td { background: var(--hl); font-weight: 700; color: var(--strong); border-bottom: 2px solid var(--strong); }
+
+    /* BibTeX */
+    .bib { position: relative; }
+    pre {
+      background: var(--soft);
+      border-radius: 8px;
+      padding: 22px 24px;
+      overflow-x: auto;
+      font-family: "SFMono-Regular", Menlo, Consolas, "Courier New", monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--fg);
+    }
+    .copy {
+      position: absolute; top: 10px; right: 10px;
+      font: inherit; font-size: 15px; font-weight: 700;
+      background: var(--bg); color: var(--fg);
+      border: 1px solid var(--line); border-radius: 6px;
+      padding: 1px 12px; cursor: pointer;
+    }
+    .copy:hover { border-color: var(--muted); }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+      padding: 40px 0 72px;
+      border-top: 1px solid var(--line);
+      margin-top: 32px;
+    }
+
+    @media (max-width: 560px) {
+      body { font-size: 18px; }
+      header { padding-top: 56px; }
+      .authors span, .affil span { display: block; margin: 2px 0; }
+      .stats { grid-template-columns: 1fr; }
+      h2 { font-size: 28px; }
+      .justify { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- ───────── Title / Authors / Links ───────── -->
+    <header>
+      /*<div class="venue">CONFERENCE 2026</div>*/
+      <h1>Learning Match Cut Image Retrieval with a Segmentation Encoder and Synthetic Data
+        /*<span class="sub">A short subtitle or one-line description</span>*/
+      </h1>
+
+      /*<div class="authors">
+        <span><a href="#">First Author</a><sup>1</sup></span>
+        <span><a href="#">Second Author</a><sup>2†</sup></span>
+        <span><a href="#">Third Author</a><sup>1†</sup></span>
+      </div>
+      <div class="affil">
+        <span><sup>1</sup>Institution A</span>
+        <span><sup>2</sup>Institution B</span>
+      </div>
+      <div class="note">† Co-corresponding authors</div>
+
+      <div class="buttons">
+        <a href="#">Paper</a>
+        <a href="#">arXiv</a>
+        <a href="#">Code</a>
+        <a href="#">Data</a>
+      </div>*/
+    </header>
+
+    <!-- ───────── Abstract ───────── -->
+    <section id="abstract">
+      <div class="narrow">
+        <h2>Abstract</h2>
+        <p class="justify">Describe the background of the work and the problem it addresses. Explain why the problem matters and what limitations existing approaches have, in two or three sentences.</p>
+        <p class="justify">We propose <strong>Method Name</strong>, a framework that differs from prior work in a key way. Briefly describe the central idea and how it works. Important terms can be set in bold so they stand out to the reader.</p>
+        <p class="justify">Experiments show that our method achieves <strong>state-of-the-art performance</strong> on standard benchmarks, while also offering clear advantages in speed and efficiency.</p>
+      </div>
+    </section>
+
+    <!-- ───────── Highlights ───────── -->
+    <section id="highlights">
+      <div class="narrow">
+        <h2>Highlights</h2>
+        <div class="stats">
+          <div class="stat"><b>+0.6 dB</b><span>gain over the previous best</span></div>
+          <div class="stat"><b>7&times;</b><span>faster inference</span></div>
+          <div class="stat"><b>12.8M</b><span>parameters</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Method ───────── -->
+    <section id="method">
+      <div class="narrow">
+        <h2>Method</h2>
+        <p class="lead">An overview of the pipeline in three stages.</p>
+        <ol class="steps">
+          <li><b>Input Processing</b><span>Explain in a line or two how the input is received and preprocessed.</span></li>
+          <li><b>Core Module</b><span>Describe what the proposed module does and which problem it solves.</span></li>
+          <li><b>Output and Training</b><span>Describe how the final output is produced and which losses are used.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ───────── Results ───────── -->
+    <section id="results">
+      <h2>Quantitative Results</h2>
+      <p class="lead">Comparison with existing methods. The numbers below are placeholders.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Method</th><th>Params (M)</th><th>Runtime (s)</th><th>PSNR&nbsp;&uarr;</th><th>SSIM&nbsp;&uarr;</th></tr>
+          </thead>
+          <tbody>
+            <tr class="group"><td colspan="5">Baselines</td></tr>
+            <tr><td>Method A</td><td>7.3</td><td>0.048</td><td>27.70</td><td>0.7922</td></tr>
+            <tr><td>Method B</td><td>13.4</td><td>1.041</td><td>28.23</td><td>0.8153</td></tr>
+            <tr><td>Method C</td><td>52.0</td><td>0.548</td><td>28.75</td><td>0.8342</td></tr>
+            <tr class="group"><td colspan="5">Ours</td></tr>
+            <tr class="ours"><td>Ours</td><td>12.8</td><td>0.074</td><td>29.66</td><td>0.8546</td></tr>
+          </tbody>
+          <caption><b>Table 1.</b> Benchmark comparison (placeholder values). The highlighted row is our method.</caption>
+        </table>
+      </div>
+    </section>
+
+    <!-- ───────── BibTeX ───────── -->
+    <section id="bibtex">
+      <div class="narrow">
+        <h2>BibTeX</h2>
+        <div class="bib">
+          <button class="copy" type="button" onclick="copyBib(this)">Copy</button>
+<pre id="bibtex-code">@inproceedings{author2026project,
+  author    = {Author, First and Author, Second and Author, Third},
+  title     = {Your Project Title Goes Here},
+  booktitle = {Conference Name},
+  year      = {2026},
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      This website is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0 License</a>.<br>
+      Page layout inspired by the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> template.
+    </footer>
+
+  </div>
+
+  <script>
+    function copyBib(btn) {
+      var text = document.getElementById('bibtex-code').innerText;
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'Copied!';
+        setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
+      });
+    }
+  </script>
+</body>
+</html>
