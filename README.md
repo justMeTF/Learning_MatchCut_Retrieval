@@ -1,2 +1,3 @@
 # Learning_MatchCut_Retrieval
-This is official repo of "Learning Match Cut Image Retrieval with Segmentation Encoder and Synthetic Data". The implementation **code will be available soon**.
+* This repository contains the source code for our project, Learning Match Cut Image Retrieval with Segmentation Encoder and Synthetic Data.
+* The code is currently being organized and will be updated gradually.
