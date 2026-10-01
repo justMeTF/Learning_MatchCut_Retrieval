@@ -3,38 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Project Title | Project Page</title>
-  <meta name="description" content="One-line description of the project">
+  <title>Learning Match Cut Image Retrieval with Segmentation Encoder and Synthetic Data</title>
+  <meta name="description" content="Learning person-centered match cut image retrieval with a segmentation encoder and synthetic data.">
   <style>
     :root {
+      color-scheme: light dark;
       --bg: #ffffff;
       --fg: #2b2b2b;
       --strong: #111111;
-      --muted: #6b6b6b;
-      --line: #dcdcdc;
-      --soft: #f5f5f3;
+      --muted: #666666;
+      --line: #dddddd;
       --link: #2a5db0;
-      --btn: #363636;
+      --btn: #333333;
       --btn-fg: #ffffff;
-      --hl: #fff6d6;
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #16171a;
+        --bg: #181818;
         --fg: #d6d6d6;
         --strong: #f2f2f2;
-        --muted: #8d8d8d;
-        --line: #2c2d31;
-        --soft: #1e1f23;
+        --muted: #aaaaaa;
+        --line: #3b3b3b;
         --link: #7fa9ec;
-        --btn: #ececec;
-        --btn-fg: #16171a;
-        --hl: #2b2711;
+        --btn: #eeeeee;
+        --btn-fg: #181818;
       }
+
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       background: var(--bg);
       color: var(--fg);
@@ -43,279 +40,350 @@
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
     }
-
-    a { color: var(--link); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    a {
+      color: var(--link);
+      text-decoration: underline;
+      text-decoration-color: currentColor;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.18em;
+    }
+    a:hover { color: var(--link); text-decoration-color: currentColor; }
+    a:focus-visible, video:focus-visible, .table-wrap:focus-visible {
+      outline: 2px solid var(--strong);
+      outline-offset: 5px;
+    }
     strong { color: var(--strong); font-weight: 700; }
-
-    .container { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+    img, video { display: block; max-width: 100%; height: auto; }
+    .container { max-width: 880px; margin: 0 auto; padding: 0 24px 72px; }
     .narrow { max-width: 780px; margin: 0 auto; }
 
-    /* ── Header: title / authors / links ── */
-    header { text-align: center; padding: 88px 0 56px; }
-
-    .venue {
-      display: inline-block;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      color: var(--muted);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 3px 16px;
-      margin-bottom: 26px;
-    }
+    /* Existing title, overview and repository link. */
+    header { text-align: center; padding: 72px 0 52px; }
     h1 {
-      font-size: clamp(32px, 5.6vw, 52px);
+      font-size: clamp(32px, 3.8vw, 52px);
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
       line-height: 1.2;
       font-weight: 700;
       letter-spacing: -0.01em;
       color: var(--strong);
+      text-wrap: balance;
     }
-    h1 .sub {
-      display: block;
-      font-weight: 400;
-      font-style: italic;
-      color: var(--muted);
-      font-size: 0.56em;
-      margin-top: 12px;
-      letter-spacing: 0;
-    }
-
-    .authors { margin-top: 32px; font-size: 22px; }
-    .authors span { display: inline-block; margin: 0 12px; }
-    .authors sup, .affil sup { font-size: 0.65em; color: var(--muted); margin-left: 1px; }
-    .affil { margin-top: 10px; color: var(--muted); font-size: 18px; line-height: 1.6; }
-    .affil span { display: inline-block; margin: 0 12px; }
-    .note { margin-top: 4px; color: var(--muted); font-size: 16px; font-style: italic; }
-
-    .buttons { margin-top: 36px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-    .buttons a {
+    .title-line { display: block; }
+    @media (min-width: 1000px) { .title-line { white-space: nowrap; } }
+    .overview { width: min(832px, calc(100% - 48px)); margin: 32px auto 28px; background: #ffffff; }
+    .buttons { display: flex; justify-content: center; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 145px;
+      min-height: 44px;
+      padding: 10px 24px;
       background: var(--btn);
       color: var(--btn-fg);
-      padding: 7px 24px;
+      border: 1px solid var(--btn);
       border-radius: 999px;
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      transition: opacity .2s, transform .2s;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.2;
     }
-    .buttons a:hover { opacity: .8; text-decoration: none; transform: translateY(-1px); }
+    .button:hover { color: var(--btn-fg); opacity: 0.85; text-decoration: none; }
+    .button img { width: 22px; height: 22px; object-fit: contain; }
+    .icon { filter: invert(1); }
+    .note { margin-top: 10px; color: var(--muted); font-size: 16px; font-style: italic; }
 
-    /* ── Sections ── */
-    section { padding: 44px 0; }
+    /* Consistent content width and vertical rhythm. */
+    main > section { padding: 48px 0; border-top: 1px solid var(--line); }
+    main > section:last-child { padding-bottom: 0; }
     h2 {
       text-align: center;
       font-size: 32px;
       font-weight: 700;
       color: var(--strong);
-      margin-bottom: 26px;
+      line-height: 1.3;
+      margin-bottom: 32px;
     }
-    h2::after {
-      content: "";
-      display: block;
-      width: 40px;
-      height: 2px;
-      background: var(--strong);
-      margin: 12px auto 0;
+    .section-title {
+      border-left: 3px solid var(--strong);
+      padding-left: 14px;
+      margin: 40px 0 18px;
+      color: var(--strong);
+      line-height: 1.45;
+      overflow-wrap: anywhere;
     }
+    h2 + .section-title { margin-top: 0; }
     p + p { margin-top: 1em; }
-    .justify { text-align: justify; hyphens: auto; }
-    .lead { text-align: center; color: var(--muted); max-width: 660px; margin: -6px auto 26px; font-size: 18px; font-style: italic; }
+    .justify { text-align: left; }
+    .diagram { width: 100%; margin: 0 auto 20px; background: #ffffff; }
+    .training-diagram { width: 70%; }
+    .demo { margin-top: 24px; }
+    .demo video { width: 100%; }
 
-    /* Highlights (typographic, no graphics) */
-    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 8px; }
-    .stat { background: var(--soft); border-radius: 10px; padding: 24px 12px; text-align: center; }
-    .stat b { display: block; font-size: 40px; font-weight: 700; color: var(--strong); line-height: 1.15; }
-    .stat span { font-size: 16px; color: var(--muted); }
+    /* Keep four- and three-column galleries on larger screens. */
+    .gif-grid { display: grid; gap: 16px; align-items: start; }
+    .df_gif-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .hd_gif-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .gif-grid img { width: 100%; }
 
-    /* Method steps */
-    .steps { list-style: none; counter-reset: s; margin-top: 8px; }
-    .steps li {
-      counter-increment: s;
-      position: relative;
-      padding: 18px 0 18px 56px;
-      border-bottom: 1px solid var(--line);
+    /* Shared table rules; emphasize results without color. */
+    #results { width: 100%; max-width: 780px; }
+    .eval-intro { max-width: 780px; margin: 0 auto 28px; }
+    .eval-row {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      align-items: stretch;
+      gap: 20px;
     }
-    .steps li:first-child { border-top: 1px solid var(--line); }
-    .steps li::before {
-      content: counter(s);
-      position: absolute; left: 0; top: 18px;
-      width: 36px; height: 36px; line-height: 35px; text-align: center;
-      border-radius: 50%; background: var(--soft); color: var(--strong);
-      font-weight: 700; font-size: 18px;
+    .table-wrap { min-width: 0; overflow-x: auto; }
+    .eval-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 17px;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.35;
+      border-bottom: 2px solid var(--strong);
     }
-    .steps li b { color: var(--strong); display: block; font-size: 21px; }
-    .steps li span { color: var(--muted); font-size: 18px; }
-
-    /* Table */
-    .table-wrap { overflow-x: auto; margin-top: 8px; }
-    table { width: 100%; border-collapse: collapse; font-size: 17px; font-variant-numeric: tabular-nums; }
-    caption { caption-side: bottom; text-align: left; color: var(--muted); font-size: 16px; padding-top: 12px; }
-    th, td { padding: 9px 14px; text-align: right; white-space: nowrap; }
-    th:first-child, td:first-child { text-align: left; }
-    thead th { color: var(--strong); font-weight: 700; border-top: 2px solid var(--strong); border-bottom: 1px solid var(--strong); }
-    tbody td { border-bottom: 1px solid var(--line); }
-    tbody tr.group td { text-align: left; font-size: 15px; font-weight: 700; font-style: italic; color: var(--muted); background: var(--soft); }
-    tbody tr.ours td { background: var(--hl); font-weight: 700; color: var(--strong); border-bottom: 2px solid var(--strong); }
-
-    /* BibTeX */
-    .bib { position: relative; }
-    pre {
-      background: var(--soft);
-      border-radius: 8px;
-      padding: 22px 24px;
-      overflow-x: auto;
-      font-family: "SFMono-Regular", Menlo, Consolas, "Courier New", monospace;
-      font-size: 14px;
-      line-height: 1.7;
-      color: var(--fg);
+    .eval-table th, .eval-table td { padding: 4px 6px; text-align: center; vertical-align: middle; white-space: nowrap; }
+    .eval-table thead th {
+      color: var(--strong);
+      font-weight: 700;
+      border-top: 2px solid var(--strong);
+      border-bottom: 1px solid var(--strong);
     }
-    .copy {
-      position: absolute; top: 10px; right: 10px;
-      font: inherit; font-size: 15px; font-weight: 700;
-      background: var(--bg); color: var(--fg);
-      border: 1px solid var(--line); border-radius: 6px;
-      padding: 1px 12px; cursor: pointer;
+    .eval-table tbody td, .eval-table tbody th { border-bottom: 1px solid var(--line); }
+    .eval-table .method-cell { font-weight: 700; }
+    .eval-table .group-start > * { border-top: 1px solid var(--strong); }
+    .score-first, .score-second {
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
+      text-decoration-thickness: 1px;
     }
-    .copy:hover { border-color: var(--muted); }
+    .score-first { font-weight: 700; }
+    .score-second { font-weight: 400; }
+    .image-box { min-width: 0; }
+    .image-box img { width: 100%; background: #ffffff; }
 
-    footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.8;
-      padding: 40px 0 72px;
-      border-top: 1px solid var(--line);
-      margin-top: 32px;
+    .eval-row.is-stacked { grid-template-columns: minmax(0, 1fr); }
+    .eval-row.is-stacked .image-box { width: 100%; max-width: 640px; margin: 0 auto; }
+    @media (max-width: 720px) {
+      .eval-row { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+      .image-box { width: 100%; max-width: 640px; margin: 0 auto; }
     }
-
     @media (max-width: 560px) {
       body { font-size: 18px; }
-      header { padding-top: 56px; }
-      .authors span, .affil span { display: block; margin: 2px 0; }
-      .stats { grid-template-columns: 1fr; }
-      h2 { font-size: 28px; }
-      .justify { text-align: left; }
+      .container { padding: 0 20px 48px; }
+      header { padding: 44px 0 36px; }
+      .overview { width: calc(100% - 40px); margin: 24px auto; }
+      h1 { padding: 0 20px; }
+      header .note { padding: 0 20px; }
+      main > section { padding: 36px 0; }
+      h2 { font-size: 28px; margin-bottom: 26px; }
+      .section-title { margin-top: 32px; padding-left: 12px; }
+      .gif-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      .training-diagram { width: 100%; }
+      .eval-table th, .eval-table td { padding: 10px 8px; }
     }
-  </style>
+
+    @media (prefers-color-scheme: dark) { .button .icon { filter: none; } }
+</style>
 </head>
 <body>
-  <div class="container">
-
-    <!-- ───────── Title / Authors / Links ───────── -->
-    <header>
-      <!-- <div class="venue">CONFERENCE 2026</div> -->
-      <h1>Learning Match Cut Image Retrieval with a Segmentation Encoder and Synthetic Data
-        <!-- <span class="sub">A short subtitle or one-line description</span> -->
-      </h1>
-      <!--
-      <div class="authors">
-        <span><a href="#">First Author</a><sup>1</sup></span>
-        <span><a href="#">Second Author</a><sup>2†</sup></span>
-        <span><a href="#">Third Author</a><sup>1†</sup></span>
-      </div>
-      <div class="affil">
-        <span><sup>1</sup>Institution A</span>
-        <span><sup>2</sup>Institution B</span>
-      </div>
-      <div class="note">† Co-corresponding authors</div>
-
+  <header>
+      <h1>
+<span class="title-line">Learning Match Cut Image Retrieval</span>
+<span class="title-line">with Segmentation Encoder and Synthetic Data</span>
+</h1>
+      <img src="assets/abs.svg" class="overview" alt="Overview of match cut image retrieval">
       <div class="buttons">
-        <a href="#">Paper</a>
-        <a href="#">arXiv</a>
-        <a href="#">Code</a>
-        <a href="#">Data</a>
+        <a href="https://github.com/justMeTF/Learning_MatchCut_Retrieval.git" class="button" target="_blank" rel="noopener noreferrer">
+          <img src="assets/github.svg" alt="" class="icon">
+          <span>Code</span>
+        </a>
       </div>
-      --->
-    </header>
+      <div class="note">the implementaion code will be soon available</div>
+    </header>   
 
-    <!-- ───────── Abstract ───────── -->
-    <section id="abstract">
-      <div class="narrow">
-        <h2>Abstract</h2>
-        <p class="justify">A match cut is a video editing technique that creates a seamless transition by joining shots that share visual similarity, presenting content to viewers in a more striking and evocative manner. This requires careful consideration of how to combine individual shots and the effects of their combinations. However, existing image encoders used for match cut retrieval do not explicitly account for spatial relationships among objects, which are critical for identifying visually similar shot pairs. Furthermore, constructing training data for match cut retrieval is difficult in practice, as real-world examples are scarce and building a dataset from real footage raises copyright and data privacy concerns. To address these challenges, we propose a model consist of segmentation model's image encoder, CNN-based Spatial Compression Module(SCM), and a Projection Head(PH), which is desinged to learn suitable representation for match cut image retrieval. We also we constructed a rendering-based synthetic dataset, varying shot size, camera settings, character type and pose, and background to train our model. Quantitative and qualitative evaluations on real images, along with a user study, show that our method achieves high retrieval performance, demonstrating that combining spatial features from a segmentation encoder only with synthetic data is an effective approach to real-world match cut retrieval.
-      </div>
-    </section>
+    <div class="container">
 
-    <!-- ───────── Highlights ───────── -->
-    <section id="highlights">
+    <main><section id="produced-match-cut">
       <div class="narrow">
-        <h2>Highlights</h2>
-        <div class="stats">
-          <div class="stat"><b>+0.6 dB</b><span>gain over the previous best</span></div>
-          <div class="stat"><b>7&times;</b><span>faster inference</span></div>
-          <div class="stat"><b>12.8M</b><span>parameters</span></div>
+        <h2>Our Results</h2>
+        <h3 class="section-title">Match Cuts from
+          <a href="https://www.kaggle.com/datasets/silverstone1903/deep-fashion-multimodal" target="_blank" rel="noopener noreferrer">
+            DeepFashion-MultiModal Dataset</a>
+</h3>
+        <div class="df_gif-grid gif-grid">
+          <img src="assets/df_1.gif" alt="DeepFashion match cut example 1" loading="lazy" decoding="async">
+          <img src="assets/df_2.gif" alt="DeepFashion match cut example 2" loading="lazy" decoding="async">
+          <img src="assets/df_3.gif" alt="DeepFashion match cut example 3" loading="lazy" decoding="async">
+          <img src="assets/df_4.gif" alt="DeepFashion match cut example 4" loading="lazy" decoding="async">
+          <img src="assets/df_5.gif" alt="DeepFashion match cut example 5" loading="lazy" decoding="async">
+          <img src="assets/df_6.gif" alt="DeepFashion match cut example 6" loading="lazy" decoding="async">
+          <img src="assets/df_7.gif" alt="DeepFashion match cut example 7" loading="lazy" decoding="async">
+          <img src="assets/df_8.gif" alt="DeepFashion match cut example 8" loading="lazy" decoding="async">
+          <img src="assets/df_9.gif" alt="DeepFashion match cut example 9" loading="lazy" decoding="async">
+          <img src="assets/df_10.gif" alt="DeepFashion match cut example 10" loading="lazy" decoding="async">
+          <img src="assets/df_11.gif" alt="DeepFashion match cut example 11" loading="lazy" decoding="async">
+          <img src="assets/df_12.gif" alt="DeepFashion match cut example 12" loading="lazy" decoding="async">
+        </div>
+        
+        <h3 class="section-title"> Match Cuts from
+          <a href="https://www.kaggle.com/datasets/snmahsa/human-images-dataset-men-and-women" target="_blank" rel="noopener noreferrer">
+            Human Images Dataset - Men and Women</a>
+</h3>
+        <div class="hd_gif-grid gif-grid">
+          <img src="assets/hd_10.gif" alt="Human Images match cut example 1" loading="lazy" decoding="async">
+          <img src="assets/hd_2.gif" alt="Human Images match cut example 2" loading="lazy" decoding="async">
+          <img src="assets/hd_3.gif" alt="Human Images match cut example 3" loading="lazy" decoding="async">
+          <img src="assets/hd_9.gif" alt="Human Images match cut example 4" loading="lazy" decoding="async">
+          <img src="assets/hd_6.gif" alt="Human Images match cut example 5" loading="lazy" decoding="async">
+          <img src="assets/hd_7.gif" alt="Human Images match cut example 6" loading="lazy" decoding="async">
+          <img src="assets/hd_12.gif" alt="Human Images match cut example 7" loading="lazy" decoding="async">
+          <img src="assets/hd_8.gif" alt="Human Images match cut example 8" loading="lazy" decoding="async">
+          <img src="assets/hd_11.gif" alt="Human Images match cut example 9" loading="lazy" decoding="async"> 
+          <img src="assets/hd_1.gif" alt="Human Images match cut example 10" loading="lazy" decoding="async">
+          <img src="assets/hd_4.gif" alt="Human Images match cut example 11" loading="lazy" decoding="async">
+          <img src="assets/hd_5.gif" alt="Human Images match cut example 12" loading="lazy" decoding="async">
+        </div>
+
+        <h3 class="section-title">
+          Match Cut Editing Tool</h3>
+        <p class="justify">
+          To explore the practical use of the proposed method, we developed a prototype editing tool.
+          Given a set of images and the pairwise similarities computed by our method,
+          We can create match cuts without manually comparing every pair of images.
+        </p>
+        <div class="demo">
+          <video autoplay loop muted playsinline aria-label="Match cut editing tool demonstration">
+            <source src="assets/ui.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
     </section>
 
-    <!-- ───────── Method ───────── -->
+
     <section id="method">
       <div class="narrow">
-        <h2>Method</h2>
-        <p class="lead">An overview of the pipeline in three stages.</p>
-        <ol class="steps">
-          <li><b>Input Processing</b><span>Explain in a line or two how the input is received and preprocessed.</span></li>
-          <li><b>Core Module</b><span>Describe what the proposed module does and which problem it solves.</span></li>
-          <li><b>Output and Training</b><span>Describe how the final output is produced and which losses are used.</span></li>
-        </ol>
-      </div>
+        <h2>Methodology</h2>
+        <h3 class="section-title"> Our Model </h3>
+          <img src="assets/model.svg" class="diagram" alt="Model architecture">
+          <p>A segmentation encoder (SAM or SAM2) were used as the feature extraction backbone, since capturing the spatial characteristics needed for match cut retrieval.
+            A Spatial Compression Module(SCM) reduces the feature map to a 1024-d vector, and a projection head(PH) is added only for contrastive learning.
+            At inference, the PH is discarded and candidates are retrieved by cosine similarity.</p>
+        <h3 class="section-title"> Synthetic Match Cut Image Dataset </h3>
+          <img src="assets/syn.svg" class="diagram" alt="Synthetic match cut dataset generation">
+          <p>We constructed a rendering-based synthetic dataset by varying shot size, camera settings, character, pose, and background
+            to address the scarcity of real-world match-cut data and concerns related to copyright and privacy.
+            Images sharing the same shot size, camera variant, and pose are defined as belonging to the same match cut type.</p>
+        <h3 class="section-title"> Training Strategy </h3>
+          <img src="assets/ts.svg" class="diagram training-diagram" alt="Contrastive training strategy">
+          <p>By adapting the training strategy of <a href="https://simclr.github.io/" target="_blank" rel="noopener noreferrer">SimCLR</a>, we encourage the embeddings of two synthetic 
+            images from the same match cut type to become closer, while pushing apart embeddings of images from different types within a batch of 
+            2N images. Through this process, the parameters of the SCM and PH are optimized to learn representations suitable for match cut image retrieval.</p>
+          </div>
     </section>
 
-    <!-- ───────── Results ───────── -->
-    <section id="results">
-      <h2>Quantitative Results</h2>
-      <p class="lead">Comparison with existing methods. The numbers below are placeholders.</p>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>Method</th><th>Params (M)</th><th>Runtime (s)</th><th>PSNR&nbsp;&uarr;</th><th>SSIM&nbsp;&uarr;</th></tr>
-          </thead>
-          <tbody>
-            <tr class="group"><td colspan="5">Baselines</td></tr>
-            <tr><td>Method A</td><td>7.3</td><td>0.048</td><td>27.70</td><td>0.7922</td></tr>
-            <tr><td>Method B</td><td>13.4</td><td>1.041</td><td>28.23</td><td>0.8153</td></tr>
-            <tr><td>Method C</td><td>52.0</td><td>0.548</td><td>28.75</td><td>0.8342</td></tr>
-            <tr class="group"><td colspan="5">Ours</td></tr>
-            <tr class="ours"><td>Ours</td><td>12.8</td><td>0.074</td><td>29.66</td><td>0.8546</td></tr>
-          </tbody>
-          <caption><b>Table 1.</b> Benchmark comparison (placeholder values). The highlighted row is our method.</caption>
-        </table>
-      </div>
-    </section>
+    <section id="results" class="narrow">
+      <h2>Evaluations</h2>
+        <p class="eval-intro">We compare our method with the existing method, MatchCutting. Our method demonstrates better performance in both the quantitative evaluation and user study.</p>
+      <div class="eval-row">
 
-    <!-- ───────── BibTeX ───────── -->
-    <section id="bibtex">
-      <div class="narrow">
-        <h2>BibTeX</h2>
-        <div class="bib">
-          <button class="copy" type="button" onclick="copyBib(this)">Copy</button>
-<pre id="bibtex-code">@inproceedings{author2026project,
-  author    = {Author, First and Author, Second and Author, Third},
-  title     = {Your Project Title Goes Here},
-  booktitle = {Conference Name},
-  year      = {2026},
-}</pre>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Retrieval performance comparison">
+          <table class="eval-table">
+            <thead>
+              <tr>
+                <th scope="col">Method</th>
+                <th scope="col">Encoder</th>
+                <th scope="col">mAP(↑)</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <th rowspan="2" class="method-cell" scope="rowgroup">Ours</th>
+                <td>SAM2</td>
+                <td><span class="score-first">0.814±0.013</span></td>
+</tr>
+
+              <tr>
+                <td>SAM</td>
+                <td><span class="score-second">0.783±0.009</span></td>
+</tr>
+
+              <tr class="group-start">
+                <th rowspan="3" class="method-cell" scope="rowgroup">
+                  Match<br>Cutting
+                </th>
+                <td>CLIP</td>
+                <td>0.615±0.012</td>
+              </tr>
+
+              <tr>
+                <td>RN50</td>
+                <td>0.361±0.016</td>
+              </tr>
+
+              <tr>
+                <td>ENb7</td>
+                <td>0.350±0.017</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+
+        <div class="image-box">
+          <img src="assets/ut.svg" alt="User study results">
+        </div>
+
       </div>
     </section>
 
-    <footer>
-      This website is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0 License</a>.<br>
-      Page layout inspired by the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> template.
-    </footer>
+  
+    </main>
+</div>
 
-  </div>
 
-  <script>
-    function copyBib(btn) {
-      var text = document.getElementById('bibtex-code').innerText;
-      navigator.clipboard.writeText(text).then(function () {
-        btn.textContent = 'Copied!';
-        setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
-      });
-    }
-  </script>
+<script>
+    // Match the table to the SVG's natural rendered height without stretching it.
+    (() => {
+      const row = document.querySelector('.eval-row');
+      const table = row.querySelector('table');
+      const chart = row.querySelector('.image-box img');
+      let lastWidth = -1;
+      function alignEvaluation(force = false) {
+        const width = row.clientWidth;
+        if (!force && width === lastWidth) return;
+        lastWidth = width;
+        row.style.removeProperty('grid-template-columns');
+        table.style.removeProperty('height');
+        row.classList.remove('is-stacked');
+        if (window.matchMedia('(max-width: 720px)').matches || !chart.naturalWidth) return;
+        const gap = parseFloat(getComputedStyle(row).columnGap) || 20;
+        const available = width - gap;
+        const ratio = chart.naturalWidth / chart.naturalHeight;
+        const minimumTableHeight = table.getBoundingClientRect().height;
+        const compactTableWidth = 260;
+        const height = Math.max(minimumTableHeight, (available - compactTableWidth) / ratio);
+        const chartWidth = height * ratio;
+        const tableWidth = available - chartWidth;
+        // Stack when equal-height columns would make the table too narrow.
+        if (tableWidth < compactTableWidth - 1) {
+          row.classList.add('is-stacked');
+          return;
+        }
+        row.style.gridTemplateColumns = `${tableWidth}px ${chartWidth}px`;
+        table.style.height = `${height}px`;
+      }
+      chart.addEventListener('load', () => alignEvaluation(true));
+      new ResizeObserver(() => alignEvaluation()).observe(row);
+      if (document.fonts) document.fonts.ready.then(() => alignEvaluation(true));
+      alignEvaluation(true);
+    })();
+</script>
 </body>
 </html>
+
