@@ -73,7 +73,7 @@
     .title-line { display: block; }
     @media (min-width: 1000px) { .title-line { white-space: nowrap; } }
     .overview { width: min(832px, calc(100% - 48px)); margin: 32px auto 28px; background: #ffffff; }
-    .buttons { display: flex; justify-content: center; }
+    .buttons {display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap;}
     .button {
       display: inline-flex;
       align-items: center;
@@ -194,22 +194,19 @@
 <body>
   <header>
       <h1>
-<span class="title-line">Learning Match-Cut Image Retrieval</span>
-<span class="title-line">with a Segmentation Encoder and Synthetic Data</span>
-</h1>
+        <span class="title-line">Learning Match-Cut Image Retrieval</span>
+        <span class="title-line">with a Segmentation Encoder and Synthetic Data</span>
+      </h1>
       <img src="assets/abs.svg" class="overview" alt="Overview of match cut image retrieval">
       <div class="buttons">
         <a href="https://github.com/justMeTF/Learning_MatchCut_Retrieval.git" class="button" target="_blank" rel="noopener noreferrer">
           <img src="assets/github.svg" alt="" class="icon">
           <span>Code</span>
         </a>
-      </div>
-      <div class="buttons">
-          <a href="" class="button" target="_blank" rel="noopener noreferrer">
-            <img src="assets/dataset.svg" alt="" class="icon">
-            <span>Dataset</span>
-          </a>
-        </div>
+        <a href="" class="button" target="_blank" rel="noopener noreferrer">
+          <img src="assets/dataset.svg" alt="" class="icon">
+          <span>Dataset</span>
+        </a></div>
       <div class="note">the implementaion code and dataset will be soon available</div>
     </header>   
 
